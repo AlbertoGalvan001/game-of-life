@@ -110,12 +110,29 @@ const gameReducer = (state = initialState, action) => {
                     );
                     cellBool.forEach((val) => {
                         if (val) {
+                            //counts number of true adjacent cells
                             count++;
                         }
                     });
-                    nextGrid[rowIndex].push({alive: })
-                    }
-                })
-            })
+                    nextGrid[rowIndex].push({alive: deadOrAlive(count, currentColumn.alive) 
+                    });
+                });
+            });
+
+            if (state.swapGrid) {
+                return {
+                    ...state,
+                    grid2: nextGrid,
+                    swapGrid: false
+                };
+            } else {
+                return {
+                    ...state,
+                    grid1: nextGrid,
+                    swapGrid: true
+                }:
+            }
+
+            
     }
 }
