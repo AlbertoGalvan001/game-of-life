@@ -35,3 +35,23 @@ const checkAdjacentCells = (rowIndex, colIndex, x, y, arr) => {
   });
   return cells;
 };
+
+const initializeGrid = (gridX, gridY, canRandomizeGrid = false) => {
+  const gridMatrix = [];
+  for (let i = 0; i < gridX; i++) {
+    gridMatrix.push(new Array(gridY));
+    for (let j = 0; j < gridY; j++) {
+      let randomStatus = Math.floor(Math.random() * 2);
+      if (canRandomizeGrid) {
+        gridMatrix[i][j] = {
+          alive: randomStatus
+        };
+      } else {
+        gridMatrix[i][j] = {
+          alive: false
+        };
+      }
+    }
+  }
+  return gridMatrix;
+};
