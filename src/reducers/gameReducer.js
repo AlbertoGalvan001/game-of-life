@@ -36,6 +36,25 @@ const checkAdjacentCells = (rowIndex, colIndex, x, y, arr) => {
   return cells;
 };
 
+const deadOrAlive = (count, status) => {
+    if (count >= 2) {
+        //alive if alive otherwise remains dead
+        if (count === 3) {
+            //alive alive alive!
+            status = true;
+        }
+
+        if (count > 3) {
+            //dead
+            status = false;
+        }
+    } else {
+        // dead as well
+        status = false;
+    }
+    return status
+};
+
 const initializeGrid = (gridX, gridY, canRandomizeGrid = false) => {
   const gridMatrix = [];
   for (let i = 0; i < gridX; i++) {
@@ -55,3 +74,48 @@ const initializeGrid = (gridX, gridY, canRandomizeGrid = false) => {
   }
   return gridMatrix;
 };
+
+const gameReducer = (state = initialState, action) => {
+    switch(action.type) {
+        case INITIALIZE_GRID:
+            const { gridX, gridY } = action.payload;
+
+            return {
+                ...state,
+                grid1: initializeGrid(gridX, gridY),
+                swapGrid: true,
+                x: gridX,
+                y: gridY
+            };
+
+        case ANIMATE_GAME:
+            let currentGrid = null;
+            let nextGrid = [];
+            
+            if (state.swapGrid) {
+                currentGrid = "grid1";
+            } else {
+                currentGrid = "grid2";
+            }
+            state[currentGrid].forEach((currentRow, rowIndex) => {
+                nextGrid.push([]);
+                currentRow.forEach((currentColumn, colIndex) => {
+                    let count = 0;
+                    const cellBool = checkAdjacentCells(
+                        rowIndex,
+                        colIndex,
+                        state.x,
+                        state.y,
+                        state[currentGrid]
+                    );
+                    cellBool.forEach((val) => {
+                        if (val) {
+                            count++;
+                        }
+                    });
+                    nextGrid[rowIndex].push({alive: })
+                    }
+                })
+            })
+    }
+}
