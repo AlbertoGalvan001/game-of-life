@@ -37,22 +37,22 @@ const checkAdjacentCells = (rowIndex, colIndex, x, y, arr) => {
 };
 
 const deadOrAlive = (count, status) => {
-    if (count >= 2) {
-        //alive if alive otherwise remains dead
-        if (count === 3) {
-            //alive alive alive!
-            status = true;
-        }
-
-        if (count > 3) {
-            //dead
-            status = false;
-        }
-    } else {
-        // dead as well
-        status = false;
+  if (count >= 2) {
+    //alive if alive otherwise remains dead
+    if (count === 3) {
+      //alive alive alive!
+      status = true;
     }
-    return status
+
+    if (count > 3) {
+      //dead
+      status = false;
+    }
+  } else {
+    // dead as well
+    status = false;
+  }
+  return status;
 };
 
 const initializeGrid = (gridX, gridY, canRandomizeGrid = false) => {
@@ -76,63 +76,88 @@ const initializeGrid = (gridX, gridY, canRandomizeGrid = false) => {
 };
 
 const gameReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case INITIALIZE_GRID:
-            const { gridX, gridY } = action.payload;
+  switch (action.type) {
+    case INITIALIZE_GRID:
+      const { gridX, gridY } = action.payload;
 
-            return {
-                ...state,
-                grid1: initializeGrid(gridX, gridY),
-                swapGrid: true,
-                x: gridX,
-                y: gridY
-            };
+      return {
+        ...state,
+        grid1: initializeGrid(gridX, gridY),
+        swapGrid: true,
+        x: gridX,
+        y: gridY
+      };
 
-        case ANIMATE_GAME:
-            let currentGrid = null;
-            let nextGrid = [];
-            
-            if (state.swapGrid) {
-                currentGrid = "grid1";
-            } else {
-                currentGrid = "grid2";
+    case ANIMATE_GAME:
+      let currentGrid = null;
+      let nextGrid = [];
+
+      if (state.swapGrid) {
+        currentGrid = "grid1";
+      } else {
+        currentGrid = "grid2";
+      }
+      state[currentGrid].forEach((currentRow, rowIndex) => {
+        nextGrid.push([]);
+        currentRow.forEach((currentColumn, colIndex) => {
+          let count = 0;
+          const cellBool = checkAdjacentCells(
+            rowIndex,
+            colIndex,
+            state.x,
+            state.y,
+            state[currentGrid]
+          );
+          cellBool.forEach(val => {
+            if (val) {
+              //counts number of true adjacent cells
+              count++;
             }
-            state[currentGrid].forEach((currentRow, rowIndex) => {
-                nextGrid.push([]);
-                currentRow.forEach((currentColumn, colIndex) => {
-                    let count = 0;
-                    const cellBool = checkAdjacentCells(
-                        rowIndex,
-                        colIndex,
-                        state.x,
-                        state.y,
-                        state[currentGrid]
-                    );
-                    cellBool.forEach((val) => {
-                        if (val) {
-                            //counts number of true adjacent cells
-                            count++;
-                        }
-                    });
-                    nextGrid[rowIndex].push({alive: deadOrAlive(count, currentColumn.alive) 
-                    });
-                });
-            });
+          });
+          nextGrid[rowIndex].push({
+            alive: deadOrAlive(count, currentColumn.alive)
+          });
+        });
+      });
 
-            if (state.swapGrid) {
-                return {
-                    ...state,
-                    grid2: nextGrid,
-                    swapGrid: false
-                };
-            } else {
-                return {
-                    ...state,
-                    grid1: nextGrid,
-                    swapGrid: true
-                }:
-            }
+      if (state.swapGrid) {
+        return {
+          ...state,
+          grid2: nextGrid,
+          swapGrid: false
+        };
+      } else {
+        return {
+          ...state,
+          grid1: nextGrid,
+          swapGrid: true
+        };
+      }
+    case MODIFY_GRID: {
+      const { modifyRow, modifyCol } = action.payload;
+      let currentGrid = null;
+      let nextGrid = [];
 
-            
+      if (state.swapGrid) {
+        currentGrid = "grid1";
+      } else {
+        currentGrid = "grid2";
+      }
+
+      for (let i = 0; i < state[currentGrid].length; i++) {
+        nextGrid.push([]);
+        for (let j = 0; j < state[currentGrid[i]].length; j++) {
+          if (i === modifyRow && j === modifyCol) {
+            nextGrid[i].push({ alive: !state[currentGrid][i][j].alive });
+          } else {
+            nextGrid[i].push({ alive: state[currentGrid][i][j].alive });
+          }
+        }
+      }
+      return {
+        ...state,
+        [currentGrid]: nextGrid
+      };
     }
-}
+  }
+};
