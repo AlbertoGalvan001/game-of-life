@@ -249,5 +249,26 @@ const gameReducer = (state = initialState, action) => {
         [currentGrid]: presetGrid
       };
     } // this closes choose preset
+
+    case RANDOMIZE: {
+      const randomGrid = initializeGrid(state.x, state.y, true);
+      let currentGrid;
+
+      if (state.swapGrid) {
+        currentGrid = "grid1";
+      } else {
+        currentGrid = "grid2";
+      }
+
+      return {
+        ...state,
+        [currentGrid]: randomGrid
+      };
+    }
+
+    default:
+      return state;
   }
 }; // this closes game reducer
+
+export default gameReducer;
