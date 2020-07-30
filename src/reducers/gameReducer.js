@@ -158,6 +158,96 @@ const gameReducer = (state = initialState, action) => {
         ...state,
         [currentGrid]: nextGrid
       };
-    }
+    } // this closes animate game
+
+    case CHOOSE_PRESET: {
+      let currentGrid = null;
+
+      if (state.swapGrid) {
+        currentGrid = "grid1";
+      } else {
+        currentGrid = "grid2";
+      }
+      const presetGrid = initializeGrid(state.x, state.y);
+
+      switch (action.payload) {
+        case "box":
+          presetGrid[Math.floor(state.x / 2)][Math.floor(state.y / 2)] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2)][Math.floor(state.y / 2) + 1] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 1][Math.floor(state.y / 2)] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 1][
+            Math.floor(state.y / 2) + 1
+          ] = {
+            alive: true
+          };
+          break;
+
+        case "beehive":
+          presetGrid[Math.floor(state.x / 2)][Math.floor(state.y / 2)] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2)][Math.floor(state.y / 2) + 1] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 1][
+            Math.floor(state.y / 2) - 1
+          ] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 1][
+            Math.floor(state.y / 2) + 2
+          ] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 2][Math.floor(state.y / 2)] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 2][
+            Math.floor(state.y / 2) + 2
+          ] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 3][
+            Math.floor(state.y / 2) + 1
+          ] = {
+            alive: true
+          };
+          break;
+
+        case "boat":
+          presetGrid[Math.floor(state.x / 2)][Math.floor(state.y / 2)] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2)][Math.floor(state.y / 2) + 1] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 1][Math.floor(state.y / 2)] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 1][
+            Math.floor(state.y / 2) + 2
+          ] = {
+            alive: true
+          };
+          presetGrid[Math.floor(state.x / 2) + 2][
+            Math.floor(state.y / 2) + 1
+          ] = {
+            alive: true
+          };
+          break;
+        default:
+          break;
+      } // this closes choose preset action payload
+      return {
+        ...state,
+        [currentGrid]: presetGrid
+      };
+    } // this closes choose preset
   }
-};
+}; // this closes game reducer
