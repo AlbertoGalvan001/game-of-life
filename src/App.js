@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Grid from "./components/grid/Grid";
+import Controls from "./components/controls/Controls";
+import Configurations from "./components/preset-configurations/Configurations";
+import styled from "styled-components";
+
+const GridArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: black;
+  height: 100vh;
+`;
 
 function App() {
+  const [modify, setModify] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GridArea>
+        <Configurations showModal={showModal} setShowModal={setShowModal} />
+        <Controls
+          modify={modify}
+          setModify={setModify}
+          setShowModal={setShowModal}
+        />
+        <Grid modify={modify} />
+      </GridArea>
     </div>
   );
 }
