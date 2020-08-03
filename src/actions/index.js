@@ -1,4 +1,4 @@
-export const INITIALIZE_GRID = "NITIALIZE_GRID";
+export const INITIALIZE_GRID = "INITIALIZE_GRID";
 export const ANIMATE_GAME = "ANIMATE_GAME";
 export const MODIFY_GRID = "MODIFY_GRID";
 export const CAN_MODIFY = "CAN_MODIFY";

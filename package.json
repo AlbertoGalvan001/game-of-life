@@ -17,6 +17,10 @@
     "serve": "^11.3.2",
     "styled-components": "^5.1.1"
   },
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.4.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -8,15 +8,15 @@ import {
 import styled from "styled-components";
 
 const Button = styled.button`
-  border: 1px solid white;
-  background: black;
-  color: white;
-  font-family: "Press Start", cursive;
+  border: 2px solid white;
+  background: #1e7b4f;
+  color: #31ce83;
+  font-family: bold;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin: 20px 20px;
 `;
 
@@ -26,7 +26,7 @@ const Controls = props => {
   const [initialized, setInitialized] = useState(false);
 
   function continuousAnimation(timestamp) {
-    if (start == undefined) {
+    if (start === undefined) {
       start = timestamp;
     }
     const elapsed = timestamp - start;

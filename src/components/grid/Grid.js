@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import connect from "react-redux";
+import { connect } from "react-redux";
 import { modifyGridAction } from "../../actions";
 
 const CellRow = styled.div`
@@ -8,14 +8,14 @@ const CellRow = styled.div`
 `;
 
 const CellDiv = styled.div`
-  padding: 5px;
-  min_width: 30px;
-  min-height: 30px;
+  width: 94%;
+  min-width: 15px;
+  min-height: 20px;
   ${props => (props.alive ? "background: white;" : "background: black;")}
 `;
 
 const GridHolder = styled.div`
-  border: 1px solid white;
+  border: 2px solid white;
   margin: 0 auto;
   width: 94%;
 `;
@@ -26,7 +26,6 @@ const Grid = props => {
       props.modifyGridAction(row, col);
     }
   };
-
   return (
     <GridHolder>
       {props.grid

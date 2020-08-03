@@ -14,7 +14,7 @@ const initialState = {
   Y: 0
 };
 
-const checkAdjacentCells = (rowIndex, colIndex, x, y, arr) => {
+const checkNeighbors = (rowIndex, colIndex, x, y, arr) => {
   const cells = [
     [rowIndex - 1, colIndex - 1],
     [rowIndex - 1, colIndex],
@@ -101,7 +101,7 @@ const gameReducer = (state = initialState, action) => {
         nextGrid.push([]);
         currentRow.forEach((currentColumn, colIndex) => {
           let count = 0;
-          const cellBool = checkAdjacentCells(
+          const cellBool = checkNeighbors(
             rowIndex,
             colIndex,
             state.x,
@@ -146,7 +146,7 @@ const gameReducer = (state = initialState, action) => {
 
       for (let i = 0; i < state[currentGrid].length; i++) {
         nextGrid.push([]);
-        for (let j = 0; j < state[currentGrid[i]].length; j++) {
+        for (let j = 0; j < state[currentGrid].length; j++) {
           if (i === modifyRow && j === modifyCol) {
             nextGrid[i].push({ alive: !state[currentGrid][i][j].alive });
           } else {
@@ -158,6 +158,20 @@ const gameReducer = (state = initialState, action) => {
         ...state,
         [currentGrid]: nextGrid
       };
+      // const newGrid = grid.map((row, key) => {
+      //   if (key === x) {
+      //     return row.map((item, colKey) => {
+      //       if (colKey == y) {
+      //         return item === 0 ? 1 : 0;
+      //       } else {
+      //         return item;
+      //       }
+      //     });
+      //   } else {
+      //     return row;
+      //   }
+      // });
+      // currentGrid(newGrid);
     } // this closes animate game
 
     case CHOOSE_PRESET: {
