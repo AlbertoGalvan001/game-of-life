@@ -10,6 +10,7 @@ const initialState = {
   grid1: [],
   grid2: [],
   swapGrid: false,
+  generations: 0,
   x: 0,
   Y: 0
 };
@@ -85,7 +86,8 @@ const gameReducer = (state = initialState, action) => {
         grid1: initializeGrid(gridX, gridY),
         swapGrid: true,
         x: gridX,
-        y: gridY
+        y: gridY,
+        generations: 0
       };
 
     case ANIMATE_GAME:
@@ -124,13 +126,15 @@ const gameReducer = (state = initialState, action) => {
         return {
           ...state,
           grid2: nextGrid,
-          swapGrid: false
+          swapGrid: false,
+          generations: state.generations + 1
         };
       } else {
         return {
           ...state,
           grid1: nextGrid,
-          swapGrid: true
+          swapGrid: true,
+          generations: state.generations + 1
         };
       }
     case MODIFY_GRID: {
@@ -154,9 +158,11 @@ const gameReducer = (state = initialState, action) => {
           }
         }
       }
+      console.log(state.generations);
       return {
         ...state,
-        [currentGrid]: nextGrid
+        [currentGrid]: nextGrid,
+        generations: 0
       };
       // const newGrid = grid.map((row, key) => {
       //   if (key === x) {

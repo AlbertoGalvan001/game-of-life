@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import Grid from "./components/grid/Grid";
 import Controls from "./components/controls/Controls";
 import Configurations from "./components/preset-configurations/Configurations";
+import Counter from "../src/components/controls/Counter";
 import styled from "styled-components";
-import { findByLabelText } from "@testing-library/dom";
 
 const GridArea = styled.div`
   display: flex;
@@ -51,6 +51,7 @@ function App() {
         />
         <Grid modify={modify} />
         <GridCopy>
+          <Counter />
           <SubHeading>About</SubHeading>
           <Body>
             The Game Of Life was created in 1970 by the British mathematician
